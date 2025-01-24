@@ -1,16 +1,17 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Quiz } from './quiz.entity';
+import { Question } from '../entities/question.entity';
+import { Quiz } from '../entities/quiz.entity';
 
-export class QuizRepository extends Repository<Quiz> {
+export class QuestionRepository extends Repository<Question> {
   constructor(
-    @InjectRepository(Quiz)
-    private QuizRepository: Repository<Quiz>,
+    @InjectRepository(Question)
+    private QuestionRepository: Repository<Question>,
   ) {
     super(
-      QuizRepository.target,
-      QuizRepository.manager,
-      QuizRepository.queryRunner,
+      QuestionRepository.target,
+      QuestionRepository.manager,
+      QuestionRepository.queryRunner,
     );
   }
 

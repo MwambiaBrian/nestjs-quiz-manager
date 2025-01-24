@@ -1,6 +1,7 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { Question } from 'src/modules/quiz/question.entity';
-import { Quiz } from 'src/modules/quiz/quiz.entity';
+import { Question } from 'src/modules/quiz/entities/question.entity';
+
+import { Quiz } from 'src/modules/quiz/entities/quiz.entity';
 
 export const typeORM: TypeOrmModuleOptions = {
   type: 'mysql',
