@@ -1,20 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import { CreateQuizDto } from './dto/create-quiz.dto/create-quiz.dto';
+import { CreateQuizDto } from './dto/CreateQuizDto/CreateQuizDto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Quiz } from './quiz.entity';
+import { QuizRepository } from './quiz.repository';
 
 @Injectable()
 export class QuizService {
   private quizzes = [];
-  constructor(
-    @InjectRepository(Quiz)
-    private quizRepository: Repository<Quiz>,
-  ) {}
+  constructor(private readonly quizRepository: QuizRepository) {}
 
-  createQuiz(createQuizDto: CreateQuizDto) {
-    const quiz = this.quizRepository.create(createQuizDto);
-    return this.quizRepository.save(quiz);
+  async createQuiz(createQuizDto: CreateQuizDto) {
+    const quiz = await this.quizRepository.create(createQuizDto);
+    return await this.quizRepository.save(quiz);
   }
 
   findAll() {
@@ -29,7 +27,10 @@ export class QuizService {
   // getAllQuizzes() {
   //   return this.quizzes;
   // }
-  getQuizById(id: string) {
-    return this.quizzes.find((quiz) => quiz.id === +id);
+  async getQuizById(id: number) {
+    return await this.quizRepository.findOne({
+      where: { id }, //Correctly pass the condition to find by ID
+      relations: ['questions'],
+    });
   }
 }

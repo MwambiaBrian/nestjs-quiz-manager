@@ -1,4 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { Question } from 'src/modules/quiz/question.entity';
 import { Quiz } from 'src/modules/quiz/quiz.entity';
 
 export const typeORM: TypeOrmModuleOptions = {
@@ -8,6 +9,6 @@ export const typeORM: TypeOrmModuleOptions = {
   username: 'root',
   password: 'root',
   database: 'quizmanager',
-  entities: [Quiz],
+  entities: [Quiz, Question],
   synchronize: true,
 };
