@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 
 import { CreateQuestionDto } from '../dto/CreateQuestionDto/CreateQuestionDto';
 import { QuestionRepository } from '../repositories/question.repository';
+import { Question } from '../entities/question.entity';
 
 @Injectable()
 export class QuestionService {
@@ -15,5 +16,12 @@ export class QuestionService {
     quiz.questions = [...quiz.questions, newQuestion];
     quiz.save();
     return newQuestion;
+  }
+
+  async findQuestionById(id: number): Promise<Question> {
+    return await this.questionRepository.findOne({
+      where: { id }, //Correctly pass the condition to find by ID
+      relations: ['options', 'quiz'],
+    });
   }
 }
